@@ -2,21 +2,21 @@
 import com.sxtanna.database.Kedis
 import commands.AddCommand
 import commands.Command
+import commands.ResetCommand
 import commands.ShowCommand
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import redis.clients.jedis.Jedis
-import java.io.File
 
 class BotAdapter : ListenerAdapter() {
 
     companion object {
         val commands = mapOf<String, Command>(
             AddCommand().name to AddCommand(),
-            ShowCommand().name to ShowCommand()
+            ShowCommand().name to ShowCommand(),
+            ResetCommand().name to ResetCommand()
         )
-        val file = File.createTempFile(";","0")
-        val kedis = Kedis[file]
+        val jedis = Jedis()
     }
 
     override fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
