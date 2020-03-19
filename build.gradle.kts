@@ -14,6 +14,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("net.dv8tion:JDA:4.1.1_120")
     implementation("redis.clients","jedis","3.2.0")
+    implementation("com.sxtanna.database:Kedis:1.2")
 }
 
 tasks {
