@@ -1,20 +1,21 @@
 package commands
 
-import BotAdapter.Companion.kedis
-import com.sxtanna.database.Kedis
+import BotAdapter.Companion.jedis
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
-import redis.clients.jedis.Jedis
 
 class AddCommand : Command{
     override val name = "add"
 
     override fun handle(event: GuildMessageReceivedEvent) {
         if (event.message.contentRaw.split(" ")[1].isNotEmpty()){
-            kedis{
-                set()
+
+            if (jedis.get("Number").isNullOrEmpty()) {
+                jedis.set("Number","0")
             }
-            val value = BotAdapter.kedis.get()
-            BotAdapter.kedis.set("Number",event.message.contentRaw.split(" ")[1].toInt())
+            var value = 0
+            value = jedis.get("Number").toInt()
+            jedis.set("Number",(value + event.message.contentRaw.split(" ")[1].toInt()).toString())
+
         }
         println("ADD")
     }
